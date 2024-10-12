@@ -1,0 +1,31 @@
+@charset "utf-8";
+html {
+    font-size: 10px;
+    font-family: sans-serif;
+    background-color: #eee;
+}
+#top {
+    height: 4.6rem;
+    background-color: #383838;
+}
+header h1 {
+    width: 55%;
+    height: 9rem;
+    margin: auto;
+    font-size: 3.2rem;
+    text-align: center;
+    line-height: 9rem;
+    letter-spacing: 0.5rem;
+    border-bottom: 0.2rem solid #bbb;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.7rem 0;
+    color: #ddd;
+    font-size: 1.6rem;
+    text-align: center;
+    background-color: #383838;
+}

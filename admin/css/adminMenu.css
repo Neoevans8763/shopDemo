@@ -1,0 +1,33 @@
+@charset "utf-8";
+#menu {
+    width:80%;
+}
+#catalog {
+    height:4.8rem;
+    color:#fff;
+    text-align:center;
+    line-height:4.8rem;
+    background-color:#000;
+}
+#item {
+    background-color:#fff;
+    box-shadow:0 0.1rem 0.3rem 0.1rem #ddd;
+}
+#menu a {
+    display: block;
+    width: 74%;
+    margin: auto;
+    height: 5.4rem;
+    color: #009;
+    text-align: center;
+    line-height: 5.4rem;
+    text-decoration: none;
+    border-top: 0.1rem solid #ddd;
+}
+#menu a:first-child {
+    border:none;
+}
+#menu a:hover {
+    color: #f00;
+    text-decoration: underline;
+}
