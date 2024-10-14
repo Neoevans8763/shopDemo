@@ -4,6 +4,9 @@ html {
     font-family: sans-serif;
     background-color: #eee;
 }
+body {
+    min-width: 1000px;
+}
 #top {
     height: 4.6rem;
     background-color: #383838;
