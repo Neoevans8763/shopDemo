@@ -1,3 +1,17 @@
+<?php
+$host_mysql="localhost";
+$username_mysql="kent";
+$password_mysql="12345678";
+$database_mysql="shopdemo";
+$link=mysqli_connect($host_mysql,$username_mysql,$password_mysql,$database_mysql) or die("伺服器忙線中，請稍後再試");
+?>
+<?php
+if(isset($_POST['MM_Insert'])) {
+    $sql="INSERT INTO `account` (accountName, accountPassword, jobTitle) VALUES ('".$_POST['accountName']."', '".md5($_POST['accountPassword'])."', '".$_POST['jobTitle']."')";
+    mysqli_query($link,$sql);
+    header("Location:account.php");
+};
+?>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -48,17 +62,6 @@ input[type="submit"] {
     display: none;
 }
 </style>
-<?php
-session_start();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $password = htmlspecialchars($_POST['accountPassword']);
-}
-?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "<p>密碼: ".$password."</p>";
-}
-?>
 <body>
 <header>
     <div id="top"></div>
@@ -106,7 +109,6 @@ function checkPassword() {
         return true;
     };
 };
-
 // document.querySelector("form").addEventListener("submit", function(event) {
 //     event.preventDefault();
 //     var password = document.querySelector("input[name='accountPassword']").value;
@@ -114,7 +116,6 @@ function checkPassword() {
 //     var errorMessage = document.getElementById("errorMessage");
 //     if (password !== repassword) {
 //         errorMessage.style.display = "block";
-//         return;
 //     } else {
 //         alert("新增成功");
 //         document.querySelector("form").submit();
