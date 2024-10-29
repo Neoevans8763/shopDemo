@@ -1,4 +1,10 @@
 <?php
+session_start();
+// if(empty($_SESSION['MM_Account'])) {
+//     header("Location:../login/index.php");
+// };
+?>
+<?php
 $host_mysql="localhost";
 $username_mysql="kent";
 $password_mysql="12345678";
@@ -7,9 +13,19 @@ $link=mysqli_connect($host_mysql,$username_mysql,$password_mysql,$database_mysql
 ?>
 <?php
 if(isset($_POST['MM_Insert'])) {
-    $sql="INSERT INTO `account` (accountName, accountPassword, jobTitle) VALUES ('".$_POST['accountName']."', '".md5($_POST['accountPassword'])."', '".$_POST['jobTitle']."')";
-    mysqli_query($link,$sql);
-    header("Location:account.php");
+    $sql = "INSERT INTO `account` (accountName, accountPassword, jobTitle) VALUES (?, ?, ?)";
+    $stmt = mysqli_prepare($link, $sql);
+    $hashedPassword = password_hash($_POST['accountPassword'], PASSWORD_ARGON2ID);
+    mysqli_stmt_bind_param($stmt, "sss", $_POST['accountName'], $hashedPassword, $_POST['jobTitle']);
+    mysqli_stmt_execute($stmt);
+    header("Location: account.php");
+    exit;
+}
+?>
+<?php
+if(isset($_GET['logout']) && $_GET['logout']=="true") {
+    unset($_SESSION['MM_Account']);
+    header("Location:../index.php");
 };
 ?>
 <!doctype html>
@@ -61,6 +77,10 @@ input[type="submit"] {
     margin-top: 1.4rem;
     display: none;
 }
+#accountMessage{
+    color: #e00;
+    margin-top: 1.4rem;
+}
 </style>
 <body>
 <header>
@@ -81,15 +101,16 @@ input[type="submit"] {
     </div>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" autocomplete="off" onsubmit=" return checkPassword()">
         <h2>＋新增管理員帳號</h2>
-        <label>管理帳號： <input type="text" name="accountName" maxlength="20" autofocus required></label>
+        <label>管理帳號： <input id="accountName" type="text" name="accountName" maxlength="20" autofocus required onblur="accountCheck()"></label>
         <label>登入密碼： <input type="password" name="accountPassword" maxlength="20" required></label>
         <label>確認密碼： <input type="password" name="accountRepassword" maxlength="20" required></label>
         <label>職　　稱： <input type="text" name="jobTitle" maxlength="20"></label>
         <div id="formButton">
             <label>　　　　　　　　<input type="button" value="回上一頁" onclick="history.back()"></label>
-            <label><input type="submit" value="新　增"></label>
+            <label><input id="submitButton" type="submit" value="新　增"></label>
         </div>
         <label id="errorMessage">確認密碼不符!</label>
+        <label id="accountMessage"></label>
         <input type="hidden" name="MM_Insert">
     </form>
 </main>
@@ -109,18 +130,32 @@ function checkPassword() {
         return true;
     };
 };
-// document.querySelector("form").addEventListener("submit", function(event) {
-//     event.preventDefault();
-//     var password = document.querySelector("input[name='accountPassword']").value;
-//     var repassword = document.querySelector("input[name='accountRepassword']").value;
-//     var errorMessage = document.getElementById("errorMessage");
-//     if (password !== repassword) {
-//         errorMessage.style.display = "block";
-//     } else {
-//         alert("新增成功");
-//         document.querySelector("form").submit();
-//     };
-// });
+var return_account="";
+function accountCheck() {
+    var accountName = document.getElementById("accountName").value;
+    var submitButton = document.getElementById("submitButton");
+    if(accountName!="") {
+        var request = new XMLHttpRequest();
+        var url = "accountCheck.php";
+        var vars = "accountName=" + encodeURIComponent(accountName);
+        request.open("POST", url, true);
+        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        request.onreadystatechange = function() {
+            if(request.readyState == 4 && request.status == 200) {
+                    return_account = request.responseText;
+                    document.getElementById("accountMessage").innerHTML = return_account;
+                    if(return_account.includes("此帳號已有人使用!")) {
+                        submitButton.disabled = true;
+                    } else {
+                        submitButton.disabled = false;
+                    }
+            }
+        };
+        request.send(vars);
+    } else {
+        submitButton.disabled = false;
+    }
+};
 </script>
 </body>
 </html>
