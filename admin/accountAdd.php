@@ -144,7 +144,7 @@ function accountCheck() {
             if(request.readyState == 4 && request.status == 200) {
                     return_account = request.responseText;
                     document.getElementById("accountMessage").innerHTML = return_account;
-                    if(return_account.includes("此帳號已有人使用!")) {
+                    if(return_account.includes("此帳號已有人使用!") || return_account.includes("帳號數量已達到上限，無法新增更多帳號!")) {
                         submitButton.disabled = true;
                     } else {
                         submitButton.disabled = false;
