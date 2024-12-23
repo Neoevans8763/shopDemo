@@ -1,6 +1,7 @@
 @charset "utf-8";
 #menu {
-    width:80%;
+    justify-self:end;
+    width: 22rem;
 }
 #catalog {
     height:4.8rem;

@@ -1,16 +1,4 @@
-<?php
-session_start();
-// if(empty($_SESSION['MM_Account'])) {
-//     header("Location:../login/index.php");
-// };
-?>
-<?php
-$host_mysql="localhost";
-$username_mysql="kent";
-$password_mysql="12345678";
-$database_mysql="shopdemo";
-$link=mysqli_connect($host_mysql,$username_mysql,$password_mysql,$database_mysql) or die("伺服器忙線中，請稍後再試");
-?>
+<?php require_once("../connect/adminConnect.php"); ?>
 <?php
 if(isset($_POST['MM_Insert'])) {
     $sql = "INSERT INTO `account` (accountName, accountPassword, jobTitle) VALUES (?, ?, ?)";
@@ -21,12 +9,6 @@ if(isset($_POST['MM_Insert'])) {
     header("Location: account.php");
     exit;
 }
-?>
-<?php
-if(isset($_GET['logout']) && $_GET['logout']=="true") {
-    unset($_SESSION['MM_Account']);
-    header("Location:../index.php");
-};
 ?>
 <!doctype html>
 <html lang="zh-TW">
@@ -39,17 +21,6 @@ if(isset($_GET['logout']) && $_GET['logout']=="true") {
 <title>新增管理員帳號</title>
 </head>
 <style>
-main {
-    width: 84%;
-    margin: 4rem auto;
-    display: grid;
-    grid-template-columns: 1fr 2.5fr 1fr;
-    font-size: 2rem;
-}
-#menu {
-    justify-self:end;
-    width: 22rem;
-}
 form {
     display: grid;
     grid-template-rows: 5rem repeat(6,4rem);
@@ -88,17 +59,7 @@ input[type="submit"] {
     <h1>網站管理系統</h1>
 </header>
 <main>
-    <div id="menu">
-        <div id="catalog">功能項目</div>
-        <div id="item">
-            <a href="account.php">管理員列表</a>
-            <a href="#">會員管理</a>
-            <a href="#">商品分類管理</a>
-            <a href="#">商品管理</a>
-            <a href="#">訂單管理</a>
-            <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']."?logout=true"); ?>">登出</a>
-        </div>
-    </div>
+    <?php include("adminMenu.php"); ?>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" autocomplete="off" onsubmit=" return checkPassword()">
         <h2>＋新增管理員帳號</h2>
         <label>管理帳號： <input id="accountName" type="text" name="accountName" maxlength="20" autofocus required onblur="accountCheck()"></label>
