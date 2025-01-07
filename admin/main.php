@@ -1,3 +1,6 @@
+<?php session_start(); ?>
+<?php require_once("../connect/adminConnect.php"); ?>
+<?php require_once ("../login/session_check.php"); ?>
 <!doctype html>
 <html lang="zh-TW">
 <head>
@@ -11,6 +14,7 @@
 main {
     width: 18rem;
     margin: auto;
+    display: block;
 }
 main a {
     display: block;

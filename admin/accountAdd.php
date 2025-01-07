@@ -1,4 +1,6 @@
+<?php session_start(); ?>
 <?php require_once("../connect/adminConnect.php"); ?>
+<?php require_once ("../login/session_check.php"); ?>
 <?php
 if(isset($_POST['MM_Insert'])) {
     $sql = "INSERT INTO `account` (accountName, accountPassword, jobTitle) VALUES (?, ?, ?)";

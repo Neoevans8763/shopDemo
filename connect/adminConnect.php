@@ -1,10 +1,4 @@
 <?php
-session_start();
-// if(empty($_SESSION['MM_Account'])) {
-//     header("Location:../login/index.php");
-// };
-?>
-<?php
 $host_mysql="localhost";
 $username_mysql="kent";
 $password_mysql="12345678";
