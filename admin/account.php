@@ -87,7 +87,7 @@ main {
     <?php include("adminMenu.php"); ?>
     <div id="content">
         <div id="title">
-            <span>管理者帳號列表</span>
+            <span>管理員帳號列表</span>
             <a href="accountAdd.php">＋新增</a>                
         </div>
         <?php do { ?>

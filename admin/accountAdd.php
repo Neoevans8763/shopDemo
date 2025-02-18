@@ -66,7 +66,7 @@ input[type="submit"] {
         <h2>＋新增管理員帳號</h2>
         <label>管理帳號： <input id="accountName" type="text" name="accountName" maxlength="20" autofocus required onblur="accountCheck()"></label>
         <label>登入密碼： <input type="password" name="accountPassword" maxlength="20" required></label>
-        <label>確認密碼： <input type="password" name="accountRepassword" maxlength="20" required></label>
+        <label>確認密碼： <input type="password" name="accountRePassword" maxlength="20" required></label>
         <label>職　　稱： <input type="text" name="jobTitle" maxlength="20"></label>
         <div id="formButton">
             <label>　　　　　　　　<input type="button" value="回上一頁" onclick="history.back()"></label>
@@ -83,9 +83,9 @@ input[type="submit"] {
 <script>
 function checkPassword() {
     var password = document.querySelector("input[name='accountPassword']").value;
-    var repassword = document.querySelector("input[name='accountRepassword']").value;
+    var rePassword = document.querySelector("input[name='accountRePassword']").value;
     var errorMessage = document.getElementById("errorMessage");
-    if (password !== repassword) {
+    if (password !== rePassword) {
         errorMessage.style.display = "block";
         return false;
     } else {
