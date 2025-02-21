@@ -44,7 +44,7 @@ main a:hover {
     <a href="#">商品分類</a>
     <a href="#">商品管理</a>
     <a href="#">訂單管理</a>
-    <a href="#">登　出</a>
+    <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']."?logout=true"); ?>"</a>登　出</a>
 </main>
 <footer>
     &copy;版權所有
