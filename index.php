@@ -140,4 +140,87 @@
         </div>
     </section>
 </body>
+<script src="js/jquery-3.7.1.min.js"></script>
+<script>
+var interval;
+var photo=$('#slider');
+var x=0;
+var isClickable=true;
+function startSlide() {
+    interval=setInterval(function() {
+        photo.animate({
+            left:'-=100%'
+        },1000,function() {
+            x-=100;
+            if(x==-400) {
+                photo.css({
+                    'left':'0'
+                });
+                x=0;
+            };
+        });
+    },3000);
+};
+startSlide();
+$('#banner').hover(function() {
+    clearInterval(interval);
+}, function() {
+    startSlide();
+});
+$('#next').click(function() {
+    if(isClickable) {
+        isClickable=false;
+        photo.animate({
+            left:'-=100%'
+        },1000,function() {
+            x-=100;
+            if(x==-400) {
+                photo.css({
+                    'left':'0'
+                });
+                x=0;
+            };
+        });
+        setTimeout(function() {
+            isClickable=true;
+        },1000);
+    };
+});
+$('#pre').click(function() {
+    if(isClickable) {
+        isClickable=false;
+        if(x==0) {
+            photo.css({
+                'left':'-400%'
+            });
+            x=-400;
+        };
+        photo.animate({
+            left:'+=100%'
+        },1000,function() {
+            x+=100;
+        });
+        setTimeout(function() {
+            isClickable=true;
+        },1000);
+    };
+});
+document.onvisibilitychange=function() {
+    if(document.visibilityState=="visible") {
+        startSlide();
+    } else {
+        clearInterval(interval);
+    };
+};
+function resizeBanner() {
+    bannerHeight=$('#banner').width()*600/1200;
+    $('#banner').css({
+        'height':bannerHeight+'px'
+    });
+};
+resizeBanner();
+$(window).resize(function() {
+    resizeBanner();
+});
+</script>
 </html>
